@@ -1,0 +1,8 @@
+<span *ngIf="!showImage" (click)="onImagePathClick()">{{
+  params.value
+}}</span>
+<img
+  *ngIf="showImage"
+  [src]="params.value"
+  style="max-width: 100px; max-height: 100px;"
+/>

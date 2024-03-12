@@ -1,0 +1,29 @@
+.header-section {
+  background-color: #abccdb;
+  box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+  color: #fff;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+
+  .title {
+    padding: 12px;
+  }
+  .profileButton {
+    margin: 1px;
+  }
+  .btn {
+    /* background-color: #0782bb; */
+    border: 1px solid white;
+    color: #fff;
+    padding: 10px;
+    /* margin: 1px; */
+  }
+  .btn i {
+    color: #fff;
+  }
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

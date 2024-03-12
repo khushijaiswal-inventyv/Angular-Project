@@ -1,0 +1,14 @@
+<button (click)="onUpdateButtonClick()" class="btn">
+  <i class="fa-sharp fa-solid fa-pen"></i>
+</button>
+<button (click)="onDeleteButtonClick()" class="btn">
+  <i class="fa-solid fa-trash"></i>
+</button>
+
+<i class="fa fa-upload" aria-hidden="true" (click)="fileUpload.click()"></i>
+<input
+  #fileUpload
+  type="file"
+  (change)="onFileSelected($event)"
+  class="btn"
+/>

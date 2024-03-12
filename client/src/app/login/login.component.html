@@ -1,0 +1,28 @@
+<!-- src/app/signup-form/signup-form.component.html -->
+<div>
+    <div class="text-2xl flex justify-center items-center">Login Form</div>
+    <div>
+      <form [formGroup]="LoginForm" #reg="ngForm" (ngSubmit)="onSubmit(reg.value)"
+        class="max-w-md mx-auto mt-8 p-6 bg-gray-100 rounded-lg shadow-md">
+        <div class="mb-4">
+          <label for="email" class="block">Email:</label>
+          <input type="email" id="email" formControlName="email"
+            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            <div *ngIf="LoginForm.get('email')?.invalid && LoginForm.get('email')?.touched" class="text-red-500 text-sm mt-1">Please enter email
+          </div>
+        </div>
+        
+        <div *ngIf="LoginForm.get('email')?.valid">
+        <div class="mb-4">
+          <label for="password" class="block">Password:</label>
+          <input type="password" id="password" formControlName="password"
+            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+          <div *ngIf="LoginForm.get('password')?.invalid && LoginForm.get('password')?.touched" class="text-red-500 text-sm mt-1">Password is required
+          </div>
+        </div>
+      </div>
+        <button type="submit" [disabled]="LoginForm.invalid"
+          class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Submit</button>
+      </form>
+    </div>
+  </div>

@@ -1,0 +1,23 @@
+<header class="header-section">
+    <div class="title">
+        <h5 class="mb-5 text-white">NodeJS Project</h5>
+    </div>
+    <div class="profileButton">
+        <button id="btn" class="btn fw-bold" (click)="OnClick()"><i class="fa fa-user me-3" aria-hidden="true"></i>{{name}}<i
+            class="fa fa-caret-down ms-3" aria-hidden="true"></i></button>
+              <button class="btn fw-bold" (click)="logout()">Logout</button>
+    </div>
+</header>
+<div>
+<div class="flex justify-center items-center font-bold">Users</div>
+<app-update-row (userData)="updateData($event)"></app-update-row>
+<ag-grid-angular
+    style="width: 100%; height: 500px;"
+	class="ag-theme-alpine"
+	[rowData]="rowData"
+	[columnDefs]="columnDefs"
+  [components]="frameworkComponents"
+	[defaultColDef]="defaultColDef"
+  (gridReady)="OnGridReady($event)">
+</ag-grid-angular>
+</div>
