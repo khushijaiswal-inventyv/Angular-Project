@@ -15,27 +15,30 @@ import { DataSharingService } from '../../services/data-sharing.service';
   styleUrl: './update-row.component.css'
 })
 export class UpdateRowComponent implements ICellRendererAngularComp {
-  // @Output() userData = new EventEmitter<any>();
+  @Input() rowData: any;
+  @Output() userData: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private _userProfile: RegisterService,
     private http: HttpClient, private dataSharingService: DataSharingService
   ) {}
+
   public params!: ICellRendererParams;
-    private rowData:any;
+    // private rowData:any;
   agInit(params: ICellRendererParams): void {
-    console.log(this.rowData);
+    // console.log(this.rowData);
     this.params = params;
-    this.rowData = this.params.data;
+    // this.rowData = this.params.data;
   }
-  showData(){
-    this.dataSharingService.updateRowData(this.rowData);
-  }
+  // showData(){
+  //   this.dataSharingService.updateRowData(this.rowData);
+  // }
   userList:any;
   // @Input() rowData: any;
   refresh(): boolean {
     return false;
   }
-  @Input() gridApi!: GridApi;
+  // @Input() gridApi!: GridApi;
+
   onDeleteButtonClick() {
     Swal.fire({
       title: 'Are you sure?',
@@ -56,21 +59,35 @@ export class UpdateRowComponent implements ICellRendererAngularComp {
           // const index = this.rowData.findIndex((row: any) => row._id === id);
           this._userProfile.getUsers().subscribe((data)=>{
               this.userList = data;
-              // this.userData.emit(this.userList);
               console.log(this.userList);
-              this.rowData = this.userList;
+              // this.rowData = this.userList;
+
+              this.doSomethingWithData()
             });
+
           });
-          console.log("Khushi" + this.userList);
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        console.log('User not deleted');
-      }
-    });
-  }
+          // console.log("Khushi" + this.userList);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('User not deleted');
+        }
+      });
+    }
+    doSomethingWithData(){
+      console.log("Khushi "+JSON.stringify(this.userList));
+      this.rowData = JSON.stringify(this.userList);
+      console.log("RowData: "+this.rowData);
+
+      this.userData.emit(this.rowData);
+      // console.log(this.u);
+ }
+
+
   onUpdateButtonClick() {
     const email = this.params.data.email;
     console.log(email);
   }
+
+
   onFileSelected(event: any) {
     const email = this.params.data.email;
     const file: File = event.target.files[0];
@@ -82,3 +99,7 @@ export class UpdateRowComponent implements ICellRendererAngularComp {
     });
   }
 }
+function doSomethingWithData() {
+  throw new Error('Function not implemented.');
+}
+

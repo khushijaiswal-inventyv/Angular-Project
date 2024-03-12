@@ -22,13 +22,13 @@ import { BrowserModule } from '@angular/platform-browser';
 export class HomeComponent implements OnInit {
   rowData: any;
   columnDefs: any;
-  frameworkComponents: any;
-// @Input() userData: any;
+  // frameworkComponents: any;
+@Input() userData: any;
   constructor(private route: Router, private _getUser: RegisterService, private dataSharingService: DataSharingService) {}
   ngOnInit(): void {
-    this.frameworkComponents={
-      'updateRowComponent' : UpdateRowComponent
-    }
+    // this.frameworkComponents={
+    //   'updateRowComponent' : UpdateRowComponent
+    // }
     this._getUser.getUsers().subscribe((data) => {
       this.rowData = data;
       // this.columnDefs = Object.keys(this.rowData[0]).map(key => ({ headerName: key.toUpperCase(), field: key,}));
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
         { headerName: 'Name', field: 'name' },
         { headerName: 'ID', field: '_id' },
         { headerName: 'image', field: 'img', cellRenderer: ImageDisplayComponent},
-        { headerName: 'Action', field: 'action', cellRenderer: 'updateRowComponent'},
+        { headerName: 'Action', field: 'action', cellRenderer: UpdateRowComponent},
       ];
 
 
@@ -45,9 +45,9 @@ export class HomeComponent implements OnInit {
       // console.log(this.rowData);
       // this.gridApi.setRowData(this.rowData);
     });
-    this.dataSharingService.rowData$.subscribe((rowData)=>{
-      console.log('Updated Row Data:', rowData);
-    })
+    // this.dataSharingService.rowData$.subscribe((rowData)=>{
+    //   console.log('Updated Row Data:', rowData);
+    // })
 
 // this.rowData = this.userData;
   }
@@ -62,15 +62,15 @@ export class HomeComponent implements OnInit {
       event.api.refreshCells({ force: true });
     }
   }
-  updateData(userList:any){
-    this.rowData = userList;
-    console.log(this.rowData);
+  updateData(data:any){
+    // this.rowData = userData;
+    console.log(data);
   }
   // console.log(this.userData);
-  onUserListChange(userList: any): void {
-    // Handle the updated userList here
-    console.log('Updated userList:', userList);
-  }
+  // onUserListChange(userList: any): void {
+  //   // Handle the updated userList here
+  //   console.log('Updated userList:', userList);
+  // }
   logout() {
     sessionStorage.clear();
     localStorage.clear();
