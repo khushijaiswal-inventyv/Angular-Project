@@ -4,7 +4,7 @@ import { LoginComponent } from '../login/login.component';
 import { CommonModule } from '@angular/common';
 import { RegisterService } from '../services/register.service';
 import { AgGridAngular, AgGridModule} from 'ag-grid-angular';
-import { GridApi} from 'ag-grid-community';
+import { GridApi, ColDef} from 'ag-grid-community';
 import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http';
 import { ImageDisplayComponent } from './image-display/image-display.component';
@@ -21,7 +21,8 @@ import { BrowserModule } from '@angular/platform-browser';
 })
 export class HomeComponent implements OnInit {
   rowData: any;
-  columnDefs: any;
+  columnDefs: ColDef[] = [];
+  deleteFn = this.DeleteFunction.bind(this)
   // frameworkComponents: any;
 @Input() userData: any;
   constructor(private route: Router, private _getUser: RegisterService, private dataSharingService: DataSharingService) {}
@@ -32,12 +33,14 @@ export class HomeComponent implements OnInit {
     this._getUser.getUsers().subscribe((data) => {
       this.rowData = data;
       // this.columnDefs = Object.keys(this.rowData[0]).map(key => ({ headerName: key.toUpperCase(), field: key,}));
-      this.columnDefs = [
+      this.columnDefs  = [
         { headerName: 'Email', field: 'email' },
         { headerName: 'Name', field: 'name' },
         { headerName: 'ID', field: '_id' },
-        { headerName: 'image', field: 'img', cellRenderer: ImageDisplayComponent},
-        { headerName: 'Action', field: 'action', cellRenderer: UpdateRowComponent},
+        { headerName: 'image', field: 'img', cellRenderer: ImageDisplayComponent, },
+        { headerName: 'Action', field: 'action', cellRenderer: UpdateRowComponent, cellRendererParams :{
+          deleteFn : this.deleteFn
+        }},
       ];
 
 
@@ -51,6 +54,26 @@ export class HomeComponent implements OnInit {
 
 // this.rowData = this.userData;
   }
+  DeleteFunction(id:any){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this user!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it',
+    }).then((result)=>{
+      if(result.isConfirmed){
+        this._getUser.deleteUser(id).subscribe(()=>{
+        })
+        let index = this.rowData.findIndex((obj:any)=> obj._id == id)
+
+        this.rowData.splice(index,1)
+        this.gridApi.updateGridOptions({rowData : this.rowData})
+      }
+    })
+
+  }
   isClicked: boolean = false;
   name: any = localStorage.getItem('name');
   OnClick() {
@@ -63,8 +86,8 @@ export class HomeComponent implements OnInit {
     }
   }
   updateData(data:any){
-    // this.rowData = userData;
-    console.log(data);
+    this.rowData = data;
+    // console.log(data);
   }
   // console.log(this.userData);
   // onUserListChange(userList: any): void {

@@ -9,9 +9,9 @@ import { AgGridAngular, ICellRendererAngularComp } from 'ag-grid-angular';
 @Component({
   selector: 'app-image-display',
   standalone: true,
-  imports: [CommonModule,AgGridAngular],
+  imports: [CommonModule, AgGridAngular],
   templateUrl: './image-display.component.html',
-  styleUrl: './image-display.component.css'
+  styleUrl: './image-display.component.css',
 })
 export class ImageDisplayComponent implements ICellRendererAngularComp {
   constructor(private http: HttpClient, private image: RegisterService) {}
@@ -57,7 +57,11 @@ export class ImageDisplayComponent implements ICellRendererAngularComp {
 
   displayImage(imageUrl: any): void {
     Swal.fire({
+      title: 'Image!',
+      text: 'Image...it is!',
       imageUrl: imageUrl,
+      imageWidth: 300,
+      imageHeight: 300,
       imageAlt: 'Image',
     });
   }

@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterService } from '../services/register.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
-
+RouterLink
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, ],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -21,16 +21,16 @@ export class LoginComponent implements OnInit{
     email: ['', Validators.required],
     password: ['',Validators.required],
   });
-  
+
 }
-onSubmit(data: any){  
+onSubmit(data: any){
   console.log("Form Submitted!");
   console.log(this.LoginForm.value);
   this._loginService.login(data).subscribe(
     {
       next: (res)=>{
         console.log(res.token);
-        
+
         sessionStorage.setItem('token',res.token);
         const token = sessionStorage.getItem('token');
         if (token === "undefined") {

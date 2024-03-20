@@ -11,7 +11,7 @@
             <div *ngIf="LoginForm.get('email')?.invalid && LoginForm.get('email')?.touched" class="text-red-500 text-sm mt-1">Please enter email
           </div>
         </div>
-        
+
         <div *ngIf="LoginForm.get('email')?.valid">
         <div class="mb-4">
           <label for="password" class="block">Password:</label>
@@ -23,6 +23,8 @@
       </div>
         <button type="submit" [disabled]="LoginForm.invalid"
           class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Submit</button>
-      </form>
+        <a href="#" routerLink="register">Don't have an account?</a>
+        <a href="#">Forget Password?</a>
+        </form>
     </div>
   </div>

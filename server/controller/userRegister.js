@@ -7,6 +7,15 @@ const userRegister = async(req,res)=>{
     try{
      await dbConnect();
      req.body.img="";
+     const email= req.body.email;
+     const userEmail = await User.findOne({
+      email
+    });
+     if(userEmail){
+      return res
+      .status(409)
+      .json({ message: 'Email already exist' });
+     }
      const data = new User(req.body);
      const salt = await bcrypt.genSalt(10);
      const hashedPassword = await bcrypt.hash(req.body.password, salt);
